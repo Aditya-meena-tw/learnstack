@@ -20,7 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install --no-cache-dir -r requirements.txt
- 
 
       - name: Configure SSH
         run: |
@@ -29,8 +28,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
-      - name: Load environment variables
-        run: pip install -U python-dotenv && dotenv run echo "Environment variables loaded."
+      - name: Set environment variables
+        run: |
+          echo "APP_ENV=production" >> $GITHUB_ENV
+          # Add any other necessary environment variables here
 
       - name: Deploy to Serveo
         run: |
