@@ -29,9 +29,7 @@ jobs:
           ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
       - name: Load environment variables
-        run: |
-          echo $(cat .env) > .envfile
-          export $(grep -v '^#' .envfile | xargs)
+        run: pip install -U python-dotenv && dotenv run echo "Environment variables loaded."
 
       - name: Deploy to Serveo
         run: |
