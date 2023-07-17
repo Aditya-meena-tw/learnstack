@@ -33,6 +33,6 @@ jobs:
           echo "export APP_ENV=production" >> $GITHUB_ENV
           # Add any other necessary environment variables here
 
-      - name: Deploy to Serveo
+      - name: Deploy to Serveo   
         run: |
           export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:8000:localhost:8000 serveo.net
