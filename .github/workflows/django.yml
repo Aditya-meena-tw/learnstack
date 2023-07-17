@@ -31,7 +31,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "export APP_ENV=production" >> $GITHUB_ENV
-          # Add any other necessary environment variables here
+          # Add any other necessary environment variables here 
 
       - name: Deploy to Serveo
         run: |
