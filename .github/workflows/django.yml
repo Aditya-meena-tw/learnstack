@@ -28,7 +28,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
-      - name: Deploy to Serveo
+      - name: Deploy to Serveo 
         run: |
           source .env
           ssh -o StrictHostKeyChecking=no -R $SERVEO_SUBDOMAIN:80:localhost:8000 serveo.net
