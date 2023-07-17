@@ -28,10 +28,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
-      - name: Set environment variables
-        run: |
-          echo "export APP_ENV=production" >> $GITHUB_ENV
-          # Add any other necessary environment variables here
 
       - name: Deploy to Serveo
         run: |
