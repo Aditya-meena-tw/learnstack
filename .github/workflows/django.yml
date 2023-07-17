@@ -29,11 +29,8 @@ jobs:
           ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
       - name: Load environment variables
-        uses: joho/godotenv-action@v1
-        with:
-          dotenv_path: .env
+        run: pip install python-dotenv && dotenv -f .env run echo "Environment variables loaded."
 
       - name: Deploy to Serveo
         run: |
           ssh -R incubo:80:localhost:8000 serveo.net
-
