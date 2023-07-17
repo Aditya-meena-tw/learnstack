@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .video-block {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .thumbnail {
+            width: 240px;
+            height: 180px;
+            margin-right: 15px;
+        }
+
+        .details {
+            flex-grow: 1;
+        }
+
+        .title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .watch-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #428bca;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .pagination a {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            background-color: #f2f2f2;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .pagination a:hover {
+            background-color: #ddd;
+        }
+        
+        .pagination span {
+            display: inline-block;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results for "<strong>{{query|capfirst}}</strong>"</h1>
+    {% for result in page_obj %}
+        <div class="video-block">
+            <img class="thumbnail" src="{{ result.thumbnail }}" alt="Video Thumbnail">
+            <div class="details">
+                <h2 class="title">{{ result.title }}</h2>
+                <p class="price">{{ result.price }}</p>
+                <a href="https://www.udemy.com{{ result.url }}" class="watch-link">Watch on Udemy</a>
+            </div>
+        </div>
+    {% endfor %}
+    
+    <div class="pagination">
+        <center>
+        {% if page_obj.has_previous %}
+            <a href="?search_input={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        
+        <span class="current-page">{{ page_obj.number }}</span>
+        
+        {% if page_obj.has_next %}
+            <a href="?search_input={{ query }}&page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+        </center>
+    </div>
+</body>
+</html>
