@@ -24,4 +24,4 @@ jobs:
   
       - name: Deploy to Serveo
         run: |
-          export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:80:localhost:8000 serveo.net
+          ssh -R incubo:80:localhost:8000 serveo.net
