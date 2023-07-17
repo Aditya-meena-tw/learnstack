@@ -21,14 +21,7 @@ jobs:
       - name: Install dependencies
         run: pip install --no-cache-dir -r requirements.txt
 
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
-
-
+  
       - name: Deploy to Serveo
         run: |
           export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:80:localhost:8000 serveo.net
