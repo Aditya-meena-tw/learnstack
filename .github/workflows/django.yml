@@ -5,7 +5,6 @@ on:
     branches:
       - master
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,9 +19,7 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install -r requirements.txt 
-
-
+        run: pip install -r requirements.txt
 
       - name: Configure SSH
         run: |
@@ -31,7 +28,12 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
-      - name: Deploy to Serveo 
+      - name: Load environment variables
+        uses: joho/godotenv-action@v1
+        with:
+          dotenv_path: .env
+
+      - name: Deploy to Serveo
         run: |
-          source .env
           ssh -R incubo:80:localhost:8000 serveo.net
+
