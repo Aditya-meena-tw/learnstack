@@ -33,7 +33,11 @@ jobs:
           echo "export APP_ENV=production" >> $GITHUB_ENV
           # Add any other necessary environment variables here
 
-      - name: Deploy to Serveo   
+      - name: Start Django development server
         run: |
-          export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:8000:localhost:8000 serveo.net
+          python3 manage.py runserver 0.0.0.0:8000 
 
+      - name: Deploy to Serveo
+        run: |
+            export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -v -R incubo:8000:localhost:8000 serveo.net
+          
