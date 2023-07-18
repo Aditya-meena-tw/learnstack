@@ -34,7 +34,7 @@ jobs:
       - name: Start Django server
         run: |
           
-          nohup python manage.py runserver --noreload
+          nohup python manage.py runserver --noreload &
 
       - name: Deploy to Serveo
         run: |
