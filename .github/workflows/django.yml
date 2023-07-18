@@ -28,12 +28,12 @@ jobs:
 
       - name: Collect static files
         run: |
-          cd learnstack
+          
           python manage.py collectstatic --noinput
 
       - name: Start Django server
         run: |
-          cd learnstack
+          
           nohup python manage.py runserver --noreload &
           sleep 30
 
