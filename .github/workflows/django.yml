@@ -38,4 +38,4 @@ jobs:
 
       - name: Deploy to Serveo
         run: |
-          ssh -R 80:localhost:8000 serveo.net
+          ssh -o "StrictHostKeyChecking=no" -R 80:localhost:8000 serveo.net
