@@ -3,12 +3,11 @@ name: Deploy to Serveo
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
-      
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -29,13 +28,19 @@ jobs:
 
       - name: Collect static files
         run: |
-          
+          cd learnstack
           python manage.py collectstatic --noinput
 
       - name: Start Django server
         run: |
+          cd learnstack
           nohup python manage.py runserver --noreload &
+          sleep 30
 
       - name: Deploy to Serveo
         run: |
-          ssh -o "StrictHostKeyChecking=no" -R 80:localhost:8000 serveo.net
+          ssh -R 80:localhost:8000 -o "StrictHostKeyChecking=no" serveo.net
+
+      - name: Stop Django server
+        run: |
+          sudo pkill -f "python manage.py runserver"
