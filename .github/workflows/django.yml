@@ -3,7 +3,7 @@ name: Django App Deployment
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -24,11 +24,11 @@ jobs:
           pip install -r requirements.txt
 
 
-      - name: Install sshuttle
+      - name: Install Serveo
         run: |
-          sudo apt-get update
-          sudo apt-get install sshuttle -y
+          npm install -g serveo
 
-      - name: Run sshuttle
+      - name: Deploy to Serveo
         run: |
-          sshuttle --remote your-serveo-url 0.0.0.0/0 --python=python3
+          serveo -s your-app-name 8000 > serveo_url.txt
+          echo "Serveo URL: $(cat serveo_url.txt)"
