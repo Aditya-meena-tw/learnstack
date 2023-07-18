@@ -3,7 +3,7 @@ name: Django App Deployment
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -28,7 +28,7 @@ jobs:
         run: |
           apt-get install -g serveo
 
-          
+
       - name: Deploy to Serveo
         run: |
           serveo -s your-app-name 8000 > serveo_url.txt
