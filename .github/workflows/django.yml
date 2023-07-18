@@ -1,4 +1,4 @@
-name: Deploy to Serveo
+name: Django App Deployment
 
 on:
   push:
@@ -8,41 +8,26 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
-
+        
       - name: Install dependencies
-        run: pip install --no-cache-dir -r requirements.txt
-
-      - name: Configure SSH
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
-
-      - name: Set environment variables
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        
+      - name: Run Django migrations
         run: |
-          echo "export APP_ENV=production" >> $GITHUB_ENV
-          # Add any other necessary environment variables here
-
+          python manage.py makemigrations
+          python manage.py migrate
+        
       - name: Deploy to Serveo
         run: |
-          export $(cat $GITHUB_ENV | grep -oE '^[^=]+')
-          ssh -v -R incubo:8000:localhost:8000 serveo.net > serveo.log 2>&1
-          exit_code=$?
-          if [ $exit_code -eq 0 ]; then
-            echo "SSH connection and port forwarding successful."
-          else
-            echo "SSH connection and port forwarding failed. Check serveo.log for more details."
-            cat serveo.log
-            exit $exit_code
-          fi
-        
+          serveo -s your-app-name 8000
