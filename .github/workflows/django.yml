@@ -33,9 +33,15 @@ jobs:
           echo "export APP_ENV=production" >> $GITHUB_ENV
           # Add any other necessary environment variables here
 
-      - name: Deploy to Serveo   
+      - name: Deploy to Serveo
         run: |
-          export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:8000:localhost:8000 serveo.net
-
-
-          
+          export $(cat $GITHUB_ENV | grep -oE '^[^=]+')
+          ssh -v -R incubo:8000:localhost:8000 serveo.net > serveo.log 2>&1
+          exit_code=$?
+          if [ $exit_code -eq 0 ]; then
+            echo "SSH connection and port forwarding successful."
+          else
+            echo "SSH connection and port forwarding failed. Check serveo.log for more details."
+            cat serveo.log
+            exit $exit_code
+          fi
