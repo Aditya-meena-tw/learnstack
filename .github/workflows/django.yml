@@ -26,7 +26,7 @@ jobs:
 
       - name: Install Serveo
         run: |
-          apt-get install -g serveo
+          apt-get install  serveo
 
 
       - name: Deploy to Serveo
