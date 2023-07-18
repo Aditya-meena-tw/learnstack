@@ -22,7 +22,6 @@ jobs:
         run: pip install --no-cache-dir -r requirements.txt
 
       - name: Configure SSH
-<<<<<<< HEAD
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
@@ -37,19 +36,4 @@ jobs:
       - name: Deploy to Serveo   
         run: |
           export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:8000:localhost:8000 serveo.net
-=======
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa serveo.net >> ~/.ssh/known_hosts
 
-      - name: Set environment variables
-        run: |
-          echo "export APP_ENV=production" >> $GITHUB_ENV
-          # Add any other necessary environment variables here 
-
-      - name: Deploy to Serveo
-        run: |
-          export $(cat $GITHUB_ENV | grep -oE '^[^=]+') && ssh -R incubo:80:localhost:8000 serveo.net
->>>>>>> origin/master
